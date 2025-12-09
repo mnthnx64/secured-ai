@@ -24,16 +24,16 @@ Modern agents aren't just LLMs; they are integrated systems. Security must be ap
 
 | Part | ID | Topic | Key Focus |
 | --- | --- | --- | --- |
-| **01** | **ASI01** | [Agent Goal Hijack](https://www.google.com/search?q=%23) | Preventing attackers from redirecting agent objectives.|
-| **02** | **ASI02** | [Tool Misuse & Exploitation](https://www.google.com/search?q=%23) | Securing how agents apply legitimate tools unsafely.|
-| **03** | **ASI03** | [Identity & Privilege Abuse](https://www.google.com/search?q=%23) | Managing delegated trust and "Confused Deputy" risks. |
-| **04** | **ASI04** | [Agentic Supply Chain](https://www.google.com/search?q=%23) | Securing dynamic tool loading and third-party artifacts. |
-| **05** | **ASI05** | [Unexpected Code Execution](https://www.google.com/search?q=%23) | Preventing RCE via agent-generated code or "vibe coding". |
-| **06** | **ASI06** | [Memory & Context Poisoning](https://www.google.com/search?q=%23) | Protecting long-term memory from persistent corruption. |
-| **07** | **ASI07** | [Insecure Inter-Agent Comm](https://www.google.com/search?q=%23) | Securing messages between cooperating agents. |
-| **08** | **ASI08** | [Cascading Failures](https://www.google.com/search?q=%23) | Containing faults before they spread across agent networks. |
-| **09** | **ASI09** | [Human-Agent Trust](https://www.google.com/search?q=%23) | Preventing manipulation via "Anthropomorphism". |
-| **10** | **ASI10** | [Rogue Agents](https://www.google.com/search?q=%23) | Managing agents that drift from their intended governance. |
+| **01** | **ASI01** | [Agent Goal Hijack](./01-agent-goal-hijack/) | Preventing attackers from redirecting agent objectives.|
+| **02** | **ASI02** | [Tool Misuse & Exploitation](./02-tool-misuse-exploitation/) | Securing how agents apply legitimate tools unsafely.|
+| **03** | **ASI03** | [Identity & Privilege Abuse](./03-identity-privilege-abuse/) | Managing delegated trust and "Confused Deputy" risks. |
+| **04** | **ASI04** | [Agentic Supply Chain](./04-agentic-supply-chain/) | Securing dynamic tool loading and third-party artifacts. |
+| **05** | **ASI05** | [Unexpected Code Execution](./05-unexpected-code-execution/) | Preventing RCE via agent-generated code or "vibe coding". |
+| **06** | **ASI06** | [Memory & Context Poisoning](./06-memory-context-poisoning/) | Protecting long-term memory from persistent corruption. |
+| **07** | **ASI07** | [Insecure Inter-Agent Comm](./07-insecure-inter-agent-comm/) | Securing messages between cooperating agents. |
+| **08** | **ASI08** | [Cascading Failures](./08-cascading-failures/) | Containing faults before they spread across agent networks. |
+| **09** | **ASI09** | [Human-Agent Trust](./09-human-agent-trust/) | Preventing manipulation via "Anthropomorphism". |
+| **10** | **ASI10** | [Rogue Agents](./10-rogue-agents/) | Managing agents that drift from their intended governance. |
 
 ## Core Defense Principles
 
