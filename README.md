@@ -47,7 +47,6 @@ Throughout this series, we emphasize three primary safeguards:
 ## Resources & References
 
 * [OWASP GenAI Security Project](https://genai.owasp.org) 
-* [Full OWASP Agentic Top 10 PDF (2026)](https://www.google.com/search?q=./OWASP-Top-10-for-Agentic-Applications-2026-12.6-1.pdf)
 * [Agentic AI Security Mapping Matrix](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) 
 
 ---
