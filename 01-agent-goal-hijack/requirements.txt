@@ -1,0 +1,11 @@
+# ASI01: Agent Goal Hijack - Dependencies
+# Install with: pip install -r requirements.txt
+
+crewai>=0.86.0
+crewai-tools>=0.17.0
+python-dotenv>=1.0.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
