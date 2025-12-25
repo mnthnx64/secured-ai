@@ -1,0 +1,12 @@
+[project]
+name = "secured-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "crewai[google-genai]>=1.7.2",
+    "matplotlib>=3.10.8",
+    "pandas>=2.3.3",
+    "pip>=25.3",
+]
