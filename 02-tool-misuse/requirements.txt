@@ -1,0 +1,20 @@
+# ASI02: Tool Misuse and Exploitation
+# Required dependencies
+
+# Core framework
+crewai>=0.80.0
+crewai-tools>=0.14.0
+
+# LLM providers
+google-generativeai>=0.8.0
+
+# Data and visualization
+pandas>=2.0.0
+matplotlib>=3.7.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# Utilities
+pydantic>=2.0.0
+
