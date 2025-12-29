@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecuredAI Lab | Agent Security Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <!-- Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .backend-setup-link {
+            color: var(--accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 0.2s ease;
+        }
+        .backend-setup-link:hover {
+            color: var(--accent-cyan);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🛡️</span>
+            <span class="brand-text">Secured<span class="accent">AI</span> Lab</span>
+        </div>
+        
+        <!-- Module Selector -->
+        <div class="module-selector">
+            <button id="module-dropdown-btn" class="module-dropdown-btn">
+                <span id="current-module-icon" class="module-icon">🎯</span>
+                <span id="current-module-name">ASI01: Goal Hijacking</span>
+                <span class="dropdown-arrow">▾</span>
+            </button>
+            <div id="module-dropdown" class="module-dropdown">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#overview" class="nav-link active">Overview</a>
+            <a href="#attacks" class="nav-link">Attack Demos</a>
+            <a href="#playground" class="nav-link">Playground</a>
+            <a href="#mitigations" class="nav-link">Mitigations</a>
+        </div>
+        <div class="nav-actions">
+            <button id="api-key-btn" class="btn btn-outline">
+                <span class="key-icon">🔑</span>
+                <span id="key-status">Set API Key</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="overview" class="hero">
+        <div class="hero-content">
+            <div id="hero-badge" class="hero-badge">OWASP Top 10 for Agentic Applications 2025</div>
+            <h1 class="hero-title">
+                <span id="hero-title-prefix">Explore AI Agent</span>
+                <span id="hero-title-gradient" class="gradient-text">Security Vulnerabilities</span>
+            </h1>
+            <p id="hero-subtitle" class="hero-subtitle">
+                Interactive demonstrations of agent goal hijacking, prompt injection attacks, 
+                and defense strategies. Bring your own API key and experiment safely.
+            </p>
+            <div class="hero-actions">
+                <button onclick="scrollToSection('playground')" class="btn btn-primary btn-lg">
+                    <span>Start Experimenting</span>
+                    <span class="btn-arrow">→</span>
+                </button>
+                <a href="https://github.com/mnthnx64/secured-ai" target="_blank" class="btn btn-ghost btn-lg">
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <span class="terminal-btn red"></span>
+                        <span class="terminal-btn yellow"></span>
+                        <span class="terminal-btn green"></span>
+                    </div>
+                    <span id="terminal-title" class="terminal-title">agent_monitor.log</span>
+                </div>
+                <div id="terminal-body" class="terminal-body">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats-section" class="stats-section">
+        <!-- Populated dynamically -->
+    </section>
+
+    <!-- Attack Demos Section -->
+    <section id="attacks" class="attacks-section">
+        <div class="section-header">
+            <h2 class="section-title">Attack <span class="gradient-text">Demonstrations</span></h2>
+            <p id="attacks-subtitle" class="section-subtitle">Explore different attack techniques and their detection</p>
+        </div>
+
+        <div id="attack-cards" class="attack-cards">
+            <!-- Populated dynamically -->
+        </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section id="playground" class="playground-section">
+        <div class="section-header">
+            <h2 class="section-title">Interactive <span class="gradient-text">Playground</span></h2>
+            <p class="section-subtitle">Test AI agent security with your own prompts and see real-time detection</p>
+        </div>
+
+        <div class="playground-container">
+            <!-- Left Panel: Input -->
+            <div class="panel input-panel">
+                <div class="panel-header">
+                    <h3>User Message</h3>
+                    <div class="preset-selector">
+                        <select id="preset-select">
+                            <option value="">-- Select Preset --</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <textarea id="user-input" placeholder="Enter a message to test...
+
+Select an attack preset from above, or type your own payload!"></textarea>
+                    
+                    <!-- Inline Threat Indicator -->
+                    <div id="inline-threat" class="inline-threat-indicator">
+                        <div class="threat-score-compact">
+                            <div id="risk-badge" class="risk-badge safe">
+                                <span class="risk-icon">✓</span>
+                                <span class="risk-text">Safe</span>
+                            </div>
+                            <div class="risk-meter-mini">
+                                <div id="risk-fill" class="risk-meter-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="risk-score" class="risk-score-value">0.00</span>
+                        </div>
+                        <div id="patterns-list" class="patterns-compact">
+                            <!-- Pattern tags appear here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="footer-controls">
+                        <div class="security-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="enable-mitigations" checked>
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-text">Enable Mitigations</span>
+                            </label>
+                        </div>
+                        <div class="backend-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="enable-backend">
+                                <span class="toggle-slider backend"></span>
+                                <span class="toggle-text">CrewAI Backend</span>
+                            </label>
+                            <span id="backend-status" class="backend-status offline">Offline</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Backend options (shown when backend mode enabled) -->
+                    <div id="backend-options" class="backend-options" style="display: none;">
+                        <select id="agent-type-select" class="agent-type-select">
+                            <option value="both">Compare Both Agents</option>
+                            <option value="vulnerable">🔴 Vulnerable Only</option>
+                            <option value="secure">🟢 Secure Only</option>
+                        </select>
+                    </div>
+                    
+                    <button id="send-btn" class="btn btn-primary">
+                        <span class="btn-icon">▶</span>
+                        <span>Analyze & Execute</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Middle Panel: Activity Log -->
+            <div class="panel logs-panel">
+                <div class="panel-header">
+                    <h3>Activity Log</h3>
+                    <button id="clear-logs" class="btn btn-ghost btn-sm">Clear</button>
+                </div>
+                <div class="panel-body">
+                    <div id="activity-log" class="activity-log">
+                        <div class="log-empty">
+                            <span class="empty-icon">📋</span>
+                            <span>No activity yet. Run some tests to see logs here.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Response -->
+            <div class="panel response-panel">
+                <div class="panel-header">
+                    <h3>Agent Response</h3>
+                    <div id="action-badge" class="action-badge">
+                        <span class="action-icon">⏳</span>
+                        <span class="action-text">Waiting</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div id="response-content" class="response-content">
+                        <div class="response-placeholder">
+                            <span class="placeholder-icon">💬</span>
+                            <span>Agent response will appear here after analysis</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="response-meta">
+                        <span id="response-time">—</span>
+                        <span id="response-model">—</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Mitigations Section -->
+    <section id="mitigations" class="mitigations-section">
+        <div class="section-header">
+            <h2 class="section-title">Defense <span class="gradient-text">Strategies</span></h2>
+            <p id="mitigations-subtitle" class="section-subtitle">OWASP-recommended mitigations</p>
+        </div>
+
+        <div id="mitigations-grid" class="mitigations-grid">
+            <!-- Populated dynamically -->
+        </div>
+    </section>
+
+    <!-- API Key Modal -->
+    <div id="api-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Configure API Key</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-info">
+                    🔐 Your API key is stored only in your browser's session storage and never sent to any server except the AI provider directly.
+                </p>
+                
+                <div class="form-group">
+                    <label for="api-provider">Provider</label>
+                    <select id="api-provider">
+                        <option value="openai">OpenAI (GPT-4)</option>
+                        <option value="gemini" selected>Google Gemini</option>
+                        <option value="anthropic">Anthropic Claude</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="api-key-input">API Key</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="api-key-input" placeholder="sk-... or AIza...">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility()">👁</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="model-select">Model</label>
+                    <select id="model-select">
+                        <option value="gpt-4o-mini">GPT-4o Mini (Fast)</option>
+                        <option value="gpt-4o">GPT-4o (Recommended)</option>
+                        <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                    </select>
+                </div>
+                
+                <hr style="border-color: var(--border); margin: 1.5rem 0;">
+                
+                <p class="modal-info" style="font-size: 0.85rem; opacity: 0.8;">
+                    🤖 <strong>CrewAI Backend</strong> — Enable backend mode in the playground to use real CrewAI agents with policy enforcement.
+                </p>
+                
+                <div class="form-group">
+                    <label for="backend-url-input">Backend URL</label>
+                    <input type="text" id="backend-url-input" placeholder="http://localhost:8080" class="form-input">
+                    <small style="color: var(--text-muted); font-size: 0.75rem;">
+                        Run locally: <code>cd backend && uvicorn main:app --port 8080</code>
+                    </small>
+                    <small style="color: var(--text-muted); font-size: 0.75rem; display: block; margin-top: 0.5rem;">
+                        <a href="https://github.com/mnthnx64/secured-ai/blob/main/backend/README.md" target="_blank" 
+                           class="backend-setup-link"
+                           title="View detailed backend setup instructions">
+                            <span>Setup instructions</span>
+                        </a>
+                    </small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveApiKey()">Save Key</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-icon">🛡️</span>
+                <span>SecuredAI Lab</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://genai.owasp.org" target="_blank">OWASP GenAI</a>
+                <a href="https://github.com/mnthnx64/secured-ai" target="_blank">GitHub</a>
+            </div>
+            <div class="footer-disclaimer">
+                For educational purposes only. Always use responsibly.
+            </div>
+        </div>
+    </footer>
+
+    <script src="modules.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

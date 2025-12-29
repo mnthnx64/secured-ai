@@ -11,6 +11,36 @@ As AI systems move from simple chat interfaces to autonomous agents that **plan,
 * **Detailed breakdowns** of each ASI vulnerability.
 * **Attack scenarios** (how they happen in the real world).
 * **Mitigation checklists** for developers.
+* **Interactive Web Lab** for hands-on experimentation.
+
+## 🚀 Try the Interactive Lab
+
+**[Launch SecuredAI Lab →](https://mnthnx64.github.io/secured-ai/)**
+
+Experience AI agent security firsthand with our interactive web application:
+
+- 🔐 **Bring Your Own Key**: Use your own API key (OpenAI, Gemini, or Claude)
+- ⚔️ **Attack Simulations**: Try pre-built attack payloads
+- 🛡️ **Real-time Detection**: See threat detection in action
+- 📊 **Security Monitoring**: Track all agent activity
+
+> Your API key stays in your browser and is never stored on any server.
+
+### Backend Mode (CrewAI)
+
+For the full experience with real CrewAI agent execution:
+
+```bash
+# Install dependencies
+pip install -r backend/requirements.txt
+
+# Run the backend
+cd backend && uvicorn main:app --port 8080
+
+# Then enable "CrewAI Backend" in the webapp
+```
+
+Deploy to Railway/Render for a hosted backend - see [backend/README.md](./backend/README.md).
 
 
 ## The Agentic Security Landscape
