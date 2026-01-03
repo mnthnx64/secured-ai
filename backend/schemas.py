@@ -112,3 +112,4 @@ class StreamEvent(BaseModel):
     event: Literal["thinking", "tool_call", "policy", "result", "error", "done"]
     data: dict
 
+
