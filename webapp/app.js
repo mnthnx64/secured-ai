@@ -78,6 +78,7 @@ function initializeModule(moduleId) {
     // Update UI with module content
     updateHeroSection(module);
     updateStatsSection(module);
+    updateScenarioDisplay(module);
     updatePresets(module);
     updateAttackCards(module);
     updateMitigations(module);
@@ -90,6 +91,94 @@ function initializeModule(moduleId) {
     updateRiskDisplay(0, [], []);
     
     console.log(`🔄 Switched to module: ${module.id} - ${module.title}`);
+}
+
+function updateScenarioDisplay(module) {
+    const container = document.getElementById('scenario-context');
+    if (!container) return;
+
+    // 1. Prepare Tools HTML
+    const toolsHtml = module.tools ? module.tools.map(tool => 
+        `<span class="tool-chip">${tool}</span>`
+    ).join('') : '<span class="text-muted">No tools defined</span>';
+
+    // 2. Prepare Intel/Environment HTML
+    let intelHtml = '';
+    
+    // Custom rendering for ASI03 (Privilege Abuse) to show Users/Tenants
+    if (module.id === 'ASI03' && module.userDatabase) {
+        intelHtml += `<strong>👥 Active Users & Roles</strong>
+        <table class="env-table">
+            <tr><th>ID</th><th>Role</th><th>Tenant</th><th>Permissions</th></tr>
+            ${Object.values(module.userDatabase).map(u => `
+                <tr>
+                    <td><span class="env-id">${u.user_id}</span></td>
+                    <td>${u.role}</td>
+                    <td>${u.tenant_id}</td>
+                    <td class="text-muted" title="${u.permissions.join(', ')}">${u.permissions.length} perms</td>
+                </tr>
+            `).join('')}
+        </table>`;
+        
+        if (module.resourceDatabase) {
+            intelHtml += `<strong>📂 Known Resources</strong>
+            <table class="env-table">
+                <tr><th>ID</th><th>Owner</th><th>Tenant</th><th>Content</th></tr>
+                ${Object.values(module.resourceDatabase).map(r => `
+                    <tr>
+                        <td><span class="env-id">${r.resource_id}</span></td>
+                        <td>${r.owner}</td>
+                        <td>${r.tenant_id}</td>
+                        <td class="env-val">${r.data}</td>
+                    </tr>
+                `).join('')}
+            </table>`;
+        }
+    } 
+    // Fallback for ASI01/02 (Extract IDs from system prompt or generic data)
+    else {
+        // Try to extract IDs from system prompt if not explicitly defined
+        const ids = module.systemPrompt.match(/IDs?:?\s*([C0-9,\s]+)/i);
+        if (ids) {
+            intelHtml += `<div style="margin-bottom:8px;"><strong>🎯 Target Entities:</strong></div>
+                          <div class="env-val">${ids[1]}</div>`;
+        }
+        intelHtml += `<div style="margin-top:8px; opacity: 0.7;">
+            <em>The system has access to internal customer databases and external email relays.</em>
+        </div>`;
+    }
+
+    // 3. Render the Board
+    container.innerHTML = `
+        <div class="scenario-col">
+            <div class="scenario-label">🤖 Agent Persona</div>
+            <div class="scenario-content">
+                <div style="white-space: pre-wrap;">${module.systemPrompt.split('\n').slice(0, 6).join('\n')}...</div>
+                <div style="margin-top: 8px; font-size: 0.75rem; color: var(--accent-cyan);">
+                    See "System Prompt" in module config for full context.
+                </div>
+            </div>
+        </div>
+
+        <div class="scenario-col">
+            <div class="scenario-label">🔧 Capable Tools</div>
+            <div class="scenario-content">
+                <div class="tool-grid">
+                    ${toolsHtml}
+                </div>
+                <p style="margin-top: 10px; font-size: 0.75rem; opacity: 0.8;">
+                    The agent can invoke these functions if the prompt context justifies it.
+                </p>
+            </div>
+        </div>
+
+        <div class="scenario-col">
+            <div class="scenario-label">📂 Known Intel & Environment</div>
+            <div class="scenario-content">
+                ${intelHtml || 'No specific environment data available.'}
+            </div>
+        </div>
+    `;
 }
 
 function updateHeroSection(module) {
